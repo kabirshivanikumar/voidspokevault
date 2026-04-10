@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-black text-white; }
+}
+
+.void-glow {
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+}
+
+.ticker-container {
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #030303; }
+::-webkit-scrollbar-thumb { background: #6200EA; border-radius: 10px; }
