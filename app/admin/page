@@ -1,0 +1,61 @@
+"use client";
+import { useState, useEffect } from "react";
+import { auth } from "@/lib/firebase";
+import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+
+export default function AdminVault() {
+  const [user, setUser] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      alert("ACCESS DENIED: INVALID CREDENTIALS");
+    }
+  };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center font-mono">
+        <form onSubmit={handleLogin} className="border border-purple-900 p-8 bg-zinc-950 shadow-[0_0_50px_rgba(168,85,247,0.2)]">
+          <h2 className="text-purple-500 mb-6 tracking-[0.3em] uppercase underline">Identity Verification Required</h2>
+          <input 
+            type="email" placeholder="ADMIN_ID" 
+            className="w-full bg-black border border-zinc-800 p-3 mb-4 text-white focus:border-purple-500 outline-none"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input 
+            type="password" placeholder="SECURE_PASS" 
+            className="w-full bg-black border border-zinc-800 p-3 mb-6 text-white focus:border-purple-500 outline-none"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="w-full bg-purple-600 py-3 font-bold hover:bg-white hover:text-black transition-all">
+            INITIALIZE_LOGIN
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-10 bg-black min-h-screen font-mono">
+      <div className="flex justify-between border-b border-zinc-800 pb-4 mb-8">
+        <h1 className="text-xl text-white">WELCOME_ADMIN_01</h1>
+        <button onClick={() => signOut(auth)} className="text-red-500 text-xs">[ TERMINATE_SESSION ]</button>
+      </div>
+      
+      {/* YOUR PRODUCT ADD/DELETE CODE GOES HERE */}
+      <div className="text-green-500">VOIDS_POKEVAULT_LIVE_FEED: Inventory Management Online...</div>
+    </div>
+  );
+}
