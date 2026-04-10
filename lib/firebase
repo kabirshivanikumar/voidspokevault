@@ -1,0 +1,17 @@
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD3T3fGEViPE1sR1TwKv44HxWxhtAAK9Eo",
+  authDomain: "voidvault-7918a.firebaseapp.com",
+  projectId: "voidvault-7918a",
+  storageBucket: "voidvault-7918a.firebasestorage.app",
+  messagingSenderId: "303058999122",
+  appId: "1:303058999122:web:44a7933daf0087831e0c8b",
+  measurementId: "G-CTNMN7PHRR"
+};
+
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app); // For saving your card data
